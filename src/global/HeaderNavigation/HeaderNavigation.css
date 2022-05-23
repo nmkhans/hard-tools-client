@@ -1,0 +1,45 @@
+.mobile__header {
+    display: none;
+}
+
+.header__nav__content {
+    background: #000;
+    width: 1030px;
+    margin: 0 auto;
+}
+
+.header__nav__content ul {
+    text-align: center;
+}
+
+.header__nav__content ul li {
+    display: inline-block;
+    margin-left: -4px;
+}
+
+.header__nav__content ul li a {
+    display: inline-block;
+    text-decoration: none;
+    padding: 20px 30px;
+    font-size: 16px;
+}
+
+@media all and (min-width: 200px) and (max-width: 768px) {
+
+    .header__nav__content {
+        width: 400px;
+        margin: 0 auto;
+    }
+
+    .desktop__header {
+        display: none;
+    }
+
+    .mobile__header {
+        display: block;
+    }
+
+    .mobile__header ul li {
+        display: block;
+    }
+}
