@@ -1,0 +1,8 @@
+.Banner {
+    background: url('./background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top center;
+    padding: 180px 0;
+    margin-top: 20px;
+}

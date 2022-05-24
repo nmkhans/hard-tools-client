@@ -4,7 +4,7 @@
 
 .header__nav__content {
     background: #000;
-    width: 100%;
+    width: 90%;
     margin: 0 auto;
 }
 
@@ -21,7 +21,7 @@
     display: inline-block;
     text-decoration: none;
     padding: 20px 30px;
-    font-size: 16px;
+    font-size: 17px;
 }
 
 @media all and (min-width: 200px) and (max-width: 768px) {

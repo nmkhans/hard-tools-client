@@ -11,7 +11,7 @@ const Header = () => {
     const [mobileMenu, setMobileMenu] = useState(false);
     return (
         <div className="Header">
-            <div className="container md:container-md sm:container-sm mx-auto">
+            <div className="container mx-auto">
                 <div className="header__content">
                     <div className="header__top flex justify-between items-center">
                         <div className="header__logo w-[150px]">
