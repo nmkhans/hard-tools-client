@@ -2,7 +2,7 @@
     {
         "name": "Hammer",
         "img": "https://i.ibb.co/zVXP8KS/hammer.jpg",
-        "description": "High quality durable super usefull hammer.",
+        "description": "High quality durable super hammer.",
         "price": 100,
         "available": 100,
         "minimum": 10
