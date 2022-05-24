@@ -1,0 +1,50 @@
+[
+    {
+        "name": "Hammer",
+        "img": "https://i.ibb.co/zVXP8KS/hammer.jpg",
+        "description": "High quality durable super usefull hammer.",
+        "price": 100,
+        "available": 100,
+        "minimum": 10
+    },
+    {
+        "name": "knife",
+        "img": "https://i.ibb.co/bggXnpb/knife.jpg",
+        "description": "Dimond edge sharpe super durable knife",
+        "price": 50,
+        "available": 100,
+        "minimum": 5
+    },
+    {
+        "name": "Round Saw",
+        "img": "https://i.ibb.co/RhBpvrt/round-saw.jpg",
+        "description": "Highly powerfull pocket round chain saw",
+        "price": 300,
+        "available": 30,
+        "minimum": 2
+    },
+    {
+        "name": "Screw Driver",
+        "img": "https://i.ibb.co/sb4437X/screw-driver.jpg",
+        "description": "Usefull durable small screw driver",
+        "price": 50,
+        "available": 100,
+        "minimum": 10
+    },
+    {
+        "name": "Tools Set",
+        "img": "https://i.ibb.co/kxvfB9y/tools-set.jpg",
+        "description": "A set of usefull tools for your save",
+        "price": 500,
+        "available": 20,
+        "minimum": 2
+    },
+    {
+        "name": "Brush",
+        "img": "https://i.ibb.co/tPvhNpP/brush.jpg",
+        "description": "Paint brush soft exostic and very usefull",
+        "price": 20,
+        "available": 100,
+        "minimum": 10
+    }
+]
