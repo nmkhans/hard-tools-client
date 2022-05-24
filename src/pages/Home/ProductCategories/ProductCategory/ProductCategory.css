@@ -1,0 +1,24 @@
+.pc__icon {
+	height: 80px;
+	width: 80px;
+	background: #ffd73c;
+	border-radius: 50%;
+	line-height: 80px;
+	text-align: center;
+    z-index: 1;
+}
+
+.pc__name {
+    height: 60px;
+    width: 200px;
+    margin-left: -20px;
+    background: #000;
+    text-align: center;
+    line-height: 60px;
+}
+
+.pc__name h3 {
+	color: #fff;
+	font-size: 20px;
+	font-weight: 700;
+}

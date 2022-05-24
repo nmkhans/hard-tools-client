@@ -2,7 +2,6 @@ import React from 'react';
 
 const SingleProduct = ({product}) => {
     const {name, img, description, price, minimum, available} = product;
-    console.log(product)
     return (
         <div className="SingleProduct w-[350px] mx-auto">
             <div className="card bg-base-100 shadow-xl">

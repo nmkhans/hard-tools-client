@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import Review from './Review/Review';
+import './Reviews.css';
 
 const Reviews = () => {
     const [reviews, setReviews] = useState([]);
@@ -19,7 +20,7 @@ const Reviews = () => {
                 <div className="reviews__content">
                     <Carousel showArrows={true} autoPlay={true} infiniteLoop={true} swipeable={true} showThumbs={false}>
                         {
-                            reviews.map(review => <Review review={review} />)
+                            reviews.map((review, index) => <Review key={index} review={review} />)
                         }
                     </Carousel>
                 </div>
