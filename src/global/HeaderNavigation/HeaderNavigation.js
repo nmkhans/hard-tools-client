@@ -23,21 +23,19 @@ const HeaderNavigation = ({ mobileMenu }) => {
     }
     return (
         <div className="header__navigation mt-2">
-            <div className="container">
-                <div className="header__nav__content">
-                    <nav className="desktop__header">
-                        <NavItem />
-                    </nav>
-                    <nav className="mobile__header flex">
-                        {
-                            mobileMenu && (
-                                <div className="mobile__header__content">
-                                    <NavItem />
-                                </div>
-                            )
-                        }
-                    </nav>
-                </div>
+            <div className="header__nav__content">
+                <nav className="desktop__header">
+                    <NavItem />
+                </nav>
+                <nav className="mobile__header flex">
+                    {
+                        mobileMenu && (
+                            <div className="mobile__header__content">
+                                <NavItem />
+                            </div>
+                        )
+                    }
+                </nav>
             </div>
         </div>
     );
