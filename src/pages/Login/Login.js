@@ -1,12 +1,14 @@
 import React from 'react';
 import img from './login.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from './../../firebase.init';
 import Loading from '../../global/Loading/Loading';
+import { toast } from 'react-toastify';
 
 const Login = () => {
+    const navigate = useNavigate();
     const [
         signInWithEmailAndPassword,
         user,
@@ -31,7 +33,7 @@ const Login = () => {
     }
 
     if (user || googleUser) {
-        console.log(user)
+        navigate('/')
     }
 
     const handleGoogleSignIn = () => {
@@ -42,6 +44,7 @@ const Login = () => {
         const email = data.email;
         const password = data.password;
         await signInWithEmailAndPassword(email, password);
+        toast.success('Login Successfull');
     };
 
     return (

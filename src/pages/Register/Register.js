@@ -1,12 +1,15 @@
 import React from 'react';
 import img from './register.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { useCreateUserWithEmailAndPassword, useUpdateProfile, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from './../../firebase.init';
-import Loading from '../../global/Loading/Loading';
+import Loading from '../../global/Loading/Loading'
+import { toast } from 'react-toastify';
+
 
 const Register = () => {
+    const navigate = useNavigate();
     const uploadApi = '4ef6064f92cecc9354940bb42dad244d';
     const [
         createUserWithEmailAndPassword,
@@ -34,7 +37,7 @@ const Register = () => {
     }
 
     if (user || googleUser) {
-        console.log(user.user);
+        navigate('/')
     }
 
     const handleGoogleSignIn = () => {
@@ -58,6 +61,7 @@ const Register = () => {
                 const img = data.data.url;
                 await createUserWithEmailAndPassword(email, password);
                 await updateProfile({ displayName: name, photoURL: img });
+                toast.success('Registration Successfull');
                 reset();
             })
     };

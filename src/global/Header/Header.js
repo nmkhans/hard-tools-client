@@ -6,9 +6,13 @@ import { AiOutlineSearch, AiOutlineUser } from 'react-icons/ai';
 import { GoThreeBars } from 'react-icons/go';
 import { ImCross } from 'react-icons/im';
 import HeaderNavigation from '../HeaderNavigation/HeaderNavigation';
+import { signOut } from 'firebase/auth';
+import auth from './../../firebase.init';
 
-const Header = () => {
+const Header = ({ user }) => {
     const [mobileMenu, setMobileMenu] = useState(false);
+    const [profileMenu, setProfileMenu] = useState(false);
+
     return (
         <div className="Header">
             <div className="container mx-auto">
@@ -19,14 +23,41 @@ const Header = () => {
                                 <img src={logo} alt="" />
                             </Link>
                         </div>
-                        <div className="header__account flex">
+                        <div className="header__account flex items-center">
                             <div className="account__link px-3">
                                 <span><AiOutlineSearch className="inline-block text-2xl mr-2" /></span>
                                 <Link to="/search">Search</Link>
                             </div>
                             <div className="account__link px-3">
-                                <span className=""><AiOutlineUser className="inline-block text-2xl mr-2" /></span>
-                                <Link to="/login">Login</Link>
+                                {
+                                    user?.uid ? (
+                                        <div className="profile__menu relative cursor-pointer">
+                                            <div onClick={() => setProfileMenu(!profileMenu)} className="avatar w-14 mt-2">
+                                                <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                                    <img src={user?.photoURL} alt="" />
+                                                </div>
+                                            </div>
+                                            {
+                                                profileMenu && (
+                                                    <div className="account__menu shadow-2xl p-8 absolute top-20 -right-20 bg-base-100 w-80 rounded-xl">
+                                                        <ul className="text-center">
+                                                            <li className="mb-5"><Link to="/">My account</Link></li>
+                                                            <li className="mb-5"><Link to="/">My account</Link></li>
+                                                            <li className="mb-5"><Link to="/">My account</Link></li>
+                                                            <li className="mb-5"><button onClick={() => signOut(auth)}>Sign out</button></li>
+                                                        </ul>
+                                                    </div>
+                                                )
+                                            }
+
+                                        </div>
+                                    ) : (
+                                        <>
+                                            <span className=""><AiOutlineUser className="inline-block text-2xl mr-2" /></span>
+                                            <Link to="/login">Login</Link>
+                                        </>
+                                    )
+                                }
                             </div>
                             <div className="mobile__menu__btn">
                                 <span onClick={() => setMobileMenu(!mobileMenu)}>
@@ -44,7 +75,7 @@ const Header = () => {
                     <HeaderNavigation mobileMenu={mobileMenu} />
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 
