@@ -5,7 +5,7 @@ import PuffLoader from "react-spinners/PuffLoader";
 
 const Loading = () => {
     const [loading, setLoading] = useState(true);
-    const [color, setColor] = useState("#da3642");
+    const [color, setColor] = useState("#ffd73c");
     const override = css`
         display: block;
         margin: 0 auto;

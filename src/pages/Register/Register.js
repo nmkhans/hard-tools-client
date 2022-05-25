@@ -2,7 +2,7 @@ import React from 'react';
 import img from './register.png';
 import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
-import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from './../../firebase.init';
 import Loading from '../../global/Loading/Loading';
 
@@ -14,24 +14,31 @@ const Register = () => {
         loading,
         error,
     ] = useCreateUserWithEmailAndPassword(auth);
+    const [
+        signInWithGoogle,
+        googleUser,
+        googleLoading,
+        googleError
+    ] = useSignInWithGoogle(auth);
     const [updateProfile] = useUpdateProfile(auth);
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
-    let errorMessage;
-    if (error) {
+    if (error || googleError) {
         // eslint-disable-next-line no-unused-vars
-        if (error.message === 'Firebase: Error (auth/email-already-in-use).') {
-            errorMessage = "Email Already Exist !";
-        }
+        console.log(error || googleError)        
     }
 
-    if (loading) {
+    if (loading || googleLoading) {
         return <Loading />
     }
 
-    if (user) {
+    if (user || googleUser) {
         console.log(user.user);
+    }
+
+    const handleGoogleSignIn = () => {
+        signInWithGoogle();
     }
 
     const onSubmit = async (data) => {
@@ -50,7 +57,7 @@ const Register = () => {
             .then(async data => {
                 const img = data.data.url;
                 await createUserWithEmailAndPassword(email, password);
-                await updateProfile({ displayName: name, photoURL:img });
+                await updateProfile({ displayName: name, photoURL: img });
                 reset();
             })
     };
@@ -141,7 +148,6 @@ const Register = () => {
                                                 {...register("image")}
                                             />
                                         </div>
-                                        <span className="text-center text-red-500 font-semibold">{errorMessage ? errorMessage : ''}</span>
                                         <label className="text-center mt-5">
                                             Already have an account? <Link className="text-secondary" to="/login">Login</Link>
                                         </label>
@@ -152,7 +158,7 @@ const Register = () => {
                                 </form>
                                 <div className="google__login form-control text-center">
                                     <div className="divider w-3/4 mx-auto">OR</div>
-                                    <button className="btn btn-outline btn-black text-black w-5/6 mx-auto mb-8">Continue with google</button>
+                                    <button onClick={handleGoogleSignIn} className="btn btn-outline btn-black text-black w-5/6 mx-auto mb-8">Continue with google</button>
                                 </div>
                             </div>
                         </div>

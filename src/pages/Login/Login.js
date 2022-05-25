@@ -2,11 +2,46 @@ import React from 'react';
 import img from './login.png';
 import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
+import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import auth from './../../firebase.init';
+import Loading from '../../global/Loading/Loading';
 
 const Login = () => {
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useSignInWithEmailAndPassword(auth);
+    const [
+        signInWithGoogle,
+        googleUser,
+        googleLoading,
+        googleError
+    ] = useSignInWithGoogle(auth);
+
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = (data) => {
-        console.log(data)
+
+    if (error || googleError) {
+        console.log(error || googleError)
+    }
+
+    if (loading || googleLoading) {
+        return <Loading />
+    }
+
+    if (user || googleUser) {
+        console.log(user)
+    }
+
+    const handleGoogleSignIn = () => {
+        signInWithGoogle();
+    }
+
+    const onSubmit = async (data) => {
+        const email = data.email;
+        const password = data.password;
+        await signInWithEmailAndPassword(email, password);
     };
 
     return (
@@ -80,7 +115,7 @@ const Login = () => {
                                 </form>
                                 <div className="google__login form-control text-center">
                                     <div className="divider w-3/4 mx-auto">OR</div>
-                                    <button className="btn btn-outline btn-black text-black w-5/6 mx-auto mb-8">Continue with google</button>
+                                    <button onClick={handleGoogleSignIn} className="btn btn-outline btn-black text-black w-5/6 mx-auto mb-8">Continue with google</button>
                                 </div>
                             </div>
                         </div>
