@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import './FeatureProduct.css';
 import SingleProduct from './SingleProduct/SingleProduct';
+import { useQuery } from 'react-query';
+import Loading from './../../../global/Loading/Loading';
 
 const FeatureProduct = () => {
-    const [products, setProducts] = useState([]);
-    useEffect(() => {
-        fetch('services.json')
-        .then(res => res.json())
-        .then(data => setProducts(data))
-    }, []);
+    const { data: products, isLoading } = useQuery('products', () => (
+        fetch('http://localhost:5000/products')
+            .then(res => res.json())
+    ))
+
+    if(isLoading) {
+        return <Loading />
+    }
 
     return (
         <div className="FeatureProduct">
