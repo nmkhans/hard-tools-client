@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './FeatureProduct.css';
 import SingleProduct from './SingleProduct/SingleProduct';
 import { useQuery } from 'react-query';
@@ -22,7 +22,7 @@ const FeatureProduct = () => {
                 </div>
                 <div className="featureProduct__content grid grid-cols-3 gap-10">
                     {
-                        products.map((product, index) => <SingleProduct key={index} product={product} />)
+                        products.map((product) => <SingleProduct key={product._id} product={product} />)
                     }
                 </div>
             </div>

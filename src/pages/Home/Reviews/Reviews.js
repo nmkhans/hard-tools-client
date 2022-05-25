@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import Review from './Review/Review';
 import './Reviews.css';
+import { useQuery } from 'react-query';
+import Loading from './../../../global/Loading/Loading';
 
 const Reviews = () => {
-    const [reviews, setReviews] = useState([]);
-    useEffect(() => {
-        fetch('reviews.json')
-            .then(res => res.json())
-            .then(data => setReviews(data));
-    }, [])
+    const {data: reviews, isLoading} = useQuery('reviews', () => (
+        fetch('http://localhost:5000/reviews')
+        .then(res => res.json())
+    ))
+
+    if(isLoading) {
+        return <Loading />
+    }
 
     return (
         <div className="Reviews">
@@ -20,7 +24,7 @@ const Reviews = () => {
                 <div className="reviews__content">
                     <Carousel showArrows={true} autoPlay={true} infiniteLoop={true} swipeable={true} showThumbs={false}>
                         {
-                            reviews.map((review, index) => <Review key={index} review={review} />)
+                            reviews.map((review) => <Review key={review._id} review={review} />)
                         }
                     </Carousel>
                 </div>
