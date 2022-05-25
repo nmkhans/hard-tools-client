@@ -103,12 +103,16 @@ const Register = () => {
                                         </div>
                                     </div>
                                 </form>
+                                <div className="google__login form-control text-center">
+                                    <div className="divider w-3/4 mx-auto">OR</div>
+                                    <button className="btn btn-outline btn-black text-black w-5/6 mx-auto mb-8">Continue with google</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="goHome">
-                    <Link to="/" className="btn btn-secondary">Go Home</Link>
+                    <Link to="/" className="btn btn-sm btn-outline">Go Back</Link>
                 </div>
             </div>
         </div>
