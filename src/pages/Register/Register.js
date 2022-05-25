@@ -2,11 +2,57 @@ import React from 'react';
 import img from './register.png';
 import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
+import auth from './../../firebase.init';
+import Loading from '../../global/Loading/Loading';
 
 const Register = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = (data) => {
-        console.log(data)
+    const uploadApi = '4ef6064f92cecc9354940bb42dad244d';
+    const [
+        createUserWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useCreateUserWithEmailAndPassword(auth);
+    const [updateProfile] = useUpdateProfile(auth);
+
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+
+    let errorMessage;
+    if (error) {
+        // eslint-disable-next-line no-unused-vars
+        if (error.message === 'Firebase: Error (auth/email-already-in-use).') {
+            errorMessage = "Email Already Exist !";
+        }
+    }
+
+    if (loading) {
+        return <Loading />
+    }
+
+    if (user) {
+        console.log(user.user);
+    }
+
+    const onSubmit = async (data) => {
+        const name = data.name;
+        const email = data.email;
+        const password = data.password;
+        const image = data.image;
+        const formData = new FormData();
+        formData.append('image', image[0]);
+
+        fetch(`https://api.imgbb.com/1/upload?key=${uploadApi}`, {
+            method: "POST",
+            body: formData
+        })
+            .then(res => res.json())
+            .then(async data => {
+                const img = data.data.url;
+                await createUserWithEmailAndPassword(email, password);
+                await updateProfile({ displayName: name, photoURL:img });
+                reset();
+            })
     };
 
     return (
@@ -95,6 +141,7 @@ const Register = () => {
                                                 {...register("image")}
                                             />
                                         </div>
+                                        <span className="text-center text-red-500 font-semibold">{errorMessage ? errorMessage : ''}</span>
                                         <label className="text-center mt-5">
                                             Already have an account? <Link className="text-secondary" to="/login">Login</Link>
                                         </label>
