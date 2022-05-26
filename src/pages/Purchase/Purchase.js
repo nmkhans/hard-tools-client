@@ -22,7 +22,9 @@ const Purchase = () => {
     }
 
     const onSubmit = async (data) => {
-        console.log(data);
+        const amount = data.amount;
+        const totalPrice = price * amount;
+        console.log(totalPrice);
         reset();
     };
 
