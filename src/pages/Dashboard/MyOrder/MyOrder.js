@@ -8,7 +8,7 @@ import OrderTable from './OrderTable/OrderTable';
 const MyOrder = () => {
     const [user, loading] = useAuthState(auth);
     const email = user?.email;
-    const {data: orders, isLoading} = useQuery('my-orders', () => (
+    const {data: orders, isLoading, refetch} = useQuery('my-orders', () => (
         fetch(`http://localhost:5000/orders/${email}`)
         .then(res => res.json())
     ))
@@ -16,8 +16,6 @@ const MyOrder = () => {
     if(loading || isLoading) {
         return <Loading />
     }
-
-    console.log(orders)
 
     return (
         <div className="MyOrder">
@@ -38,7 +36,7 @@ const MyOrder = () => {
                     </thead>
                     <tbody>
                         {
-                            orders.map(order => <OrderTable key={order._id} order={order} />)
+                            orders.map(order => <OrderTable key={order._id} order={order} refetch={refetch} />)
                         }
                     </tbody>
                 </table>
