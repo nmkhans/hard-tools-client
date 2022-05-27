@@ -31,8 +31,9 @@ const Purchase = () => {
         const totalPrice = price * amount;
         const phone = data.phone;
         const address = data.address;
+        const status = false;
         
-        const orderDetail = {name, email, productName, amount, totalPrice, phone, address};
+        const orderDetail = {name, email, productName, amount, totalPrice, phone, address, status};
         
         fetch('http://localhost:5000/orders', {
             method: "POST",
@@ -45,7 +46,7 @@ const Purchase = () => {
         .then(data => {
             if(data.insertedId) {
                 toast.success("Order Place Successfull")
-                navigate('/')
+                navigate('/dashboard/')
             }
         })
         reset();

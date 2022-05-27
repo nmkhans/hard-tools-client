@@ -3,6 +3,7 @@ import { useQuery } from 'react-query';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from './../../../firebase.init';
 import Loading from './../../../global/Loading/Loading';
+import OrderTable from './OrderTable/OrderTable';
 
 const MyOrder = () => {
     const [user, loading] = useAuthState(auth);
@@ -27,19 +28,18 @@ const MyOrder = () => {
                 <table className="table w-full">
                     <thead>
                         <tr>
-                            <th></th>
                             <th>Name</th>
-                            <th>Job</th>
-                            <th>Favorite Color</th>
+                            <th>Product</th>
+                            <th>Amount</th>
+                            <th>Total Price</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th>1</th>
-                            <td>Cy Ganderton</td>
-                            <td>Quality Control Specialist</td>
-                            <td>Blue</td>
-                        </tr>
+                        {
+                            orders.map(order => <OrderTable key={order._id} order={order} />)
+                        }
                     </tbody>
                 </table>
             </div>
