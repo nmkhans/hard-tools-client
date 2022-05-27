@@ -1,6 +1,6 @@
 import React from 'react';
 import img from './login.png';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from './../../firebase.init';
@@ -9,6 +9,9 @@ import { toast } from 'react-toastify';
 
 const Login = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location?.state?.from?.pathname || '/';
+
     const [
         signInWithEmailAndPassword,
         user,
@@ -25,6 +28,12 @@ const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     if (error || googleError) {
+        if(error.message === "Firebase: Error (auth/user-not-found).") {
+            toast.error("User not Found!")
+        }
+        if(error.message === "Firebase: Error (auth/wrong-password).") {
+            toast.error("Wrong Email or Password!")
+        }
         console.log(error || googleError)
     }
 
@@ -33,7 +42,8 @@ const Login = () => {
     }
 
     if (user || googleUser) {
-        navigate('/')
+        toast.success('Login Successfull')
+        navigate(from, {replace: true})
     }
 
     const handleGoogleSignIn = () => {
@@ -44,7 +54,6 @@ const Login = () => {
         const email = data.email;
         const password = data.password;
         await signInWithEmailAndPassword(email, password);
-        toast.success('Login Successfull');
     };
 
     return (
