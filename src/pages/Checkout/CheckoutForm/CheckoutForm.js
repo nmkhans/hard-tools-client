@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import {
     CardElement,
     useElements,
@@ -7,6 +8,7 @@ import {
 } from '@stripe/react-stripe-js';
 
 const CheckoutForm = ({ product, user }) => {
+    const navigate = useNavigate()
     const stripe = useStripe();
     const elements = useElements();
     const [showError, setShowError] = useState("");
@@ -67,7 +69,7 @@ const CheckoutForm = ({ product, user }) => {
             },
         );
 
-        if(intentError) {
+        if (intentError) {
             setShowError(intentError.message)
         } else {
             setShowError("");
@@ -76,9 +78,15 @@ const CheckoutForm = ({ product, user }) => {
                 headers: {
                     'content-type': 'application/json'
                 },
-                body: JSON.stringify({transactionId: paymentIntent.id})
+                body: JSON.stringify({ transactionId: paymentIntent.id })
             })
-            toast.success('Your payment is completed')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.modifiedCount > 0) {
+                        toast.success('Your payment is completed')
+                        navigate('/dashboard')
+                    }
+                })
         }
     }
 

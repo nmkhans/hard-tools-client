@@ -3,7 +3,7 @@ import useAlert from './../../../../hooks/useAlert';
 import { useNavigate } from 'react-router-dom';
 
 const OrderTable = ({ order, refetch }) => {
-    const { name, productName, productId, amount, totalPrice, status, _id } = order;
+    const { name, productName, productId, amount, totalPrice, status, _id, transactionId } = order;
     const { alert } = useAlert();
     const navigate = useNavigate();
 
@@ -39,7 +39,7 @@ const OrderTable = ({ order, refetch }) => {
         })
     }
     return (
-        <tr>
+        <tr className="text-center">
             <td>{name}</td>
             <td>{productName}</td>
             <td>{amount}</td>
@@ -55,7 +55,9 @@ const OrderTable = ({ order, refetch }) => {
             </td>
             <td>
                 {
-                    status ? "" : (
+                    status ? (
+                        <span>{transactionId}</span>
+                    ) : (
                         <>
                             <button onClick={() => navigate(`/checkout/${productId}`)} className="btn btn-sm mr-3 bg-green-500 text-white">Pay</button>
                             <button onClick={() => handleCancel(_id)} className="btn btn-sm bg-red-500 text-white">Cancel</button>
