@@ -7,6 +7,8 @@ import Purchase from './../../pages/Purchase/Purchase';
 import RequireAuth from '../RequireAuth/RequireAuth';
 import Dashboard from '../../pages/Dashboard/Dashboard';
 import MyOrder from './../../pages/Dashboard/MyOrder/MyOrder';
+import MyProfile from './../../pages/Dashboard/MyProfile/MyProfile';
+import AddrReview from './../../pages/Dashboard/AddReview/AddrReview';
 
 const ApplicationRoutes = () => {
     return (
@@ -23,6 +25,8 @@ const ApplicationRoutes = () => {
                 </RequireAuth>
             }>
                 <Route index element={<MyOrder />} />
+                <Route path="my-profile" element={<MyProfile />} />
+                <Route path="add-review" element={<AddrReview />} />
             </Route>
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />

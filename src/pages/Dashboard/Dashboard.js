@@ -17,10 +17,10 @@ const Dashboard = () => {
                             <Link className="text-black" to="/dashboard">My Order</Link>
                         </li>
                         <li>
-                            <Link className="text-black" to="/my-order">My other</Link>
+                            <Link className="text-black" to="/dashboard/my-profile">My Account</Link>
                         </li>
                         <li>
-                            <Link className="text-black" to="/my-account">My Account</Link>
+                            <Link className="text-black" to="/dashboard/add-review">Add a Review</Link>
                         </li>
                     </ul>
 
