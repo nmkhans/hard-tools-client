@@ -8,8 +8,8 @@ import RequireAuth from '../RequireAuth/RequireAuth';
 import Dashboard from '../../pages/Dashboard/Dashboard';
 import MyOrder from './../../pages/Dashboard/MyOrder/MyOrder';
 import MyProfile from './../../pages/Dashboard/MyProfile/MyProfile';
-import AddrReview from './../../pages/Dashboard/AddReview/AddrReview';
 import Checkout from './../../pages/Checkout/Checkout';
+import AddReview from './../../pages/Dashboard/AddReview/AddReview';
 
 const ApplicationRoutes = () => {
     return (
@@ -27,7 +27,7 @@ const ApplicationRoutes = () => {
             }>
                 <Route index element={<MyOrder />} />
                 <Route path="my-profile" element={<MyProfile />} />
-                <Route path="add-review" element={<AddrReview />} />
+                <Route path="add-review" element={<AddReview />} />
             </Route>
             <Route path="/checkout/:id" element={<Checkout />} />
             <Route path="/register" element={<Register />} />
