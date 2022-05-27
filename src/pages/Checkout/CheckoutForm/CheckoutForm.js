@@ -1,14 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import {
     CardElement,
     useElements,
     useStripe
 } from '@stripe/react-stripe-js';
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ product, user }) => {
     const stripe = useStripe();
     const elements = useElements();
     const [showError, setShowError] = useState("");
+    const [clientSecret, setClientSecret] = useState("");
+    const { totalPrice, productId } = product;
+    const { displayName, email } = user;
+
+    useEffect(() => {
+        fetch('http://localhost:5000/create-payment-intent', {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify({ totalPrice })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data?.clientSecret) {
+                    setClientSecret(data?.clientSecret)
+                }
+            })
+    }, [totalPrice])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -22,15 +42,43 @@ const CheckoutForm = () => {
         }
 
         // eslint-disable-next-line no-unused-vars
-        const {error, paymentMethod} = await stripe.createPaymentMethod({
+        const { error, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
             card,
         })
 
-        if(error) {
+        if (error) {
             setShowError(error.message)
         } else {
             setShowError("");
+        }
+
+        // confirm payment 
+        const { paymentIntent, error: intentError } = await stripe.confirmCardPayment(
+            clientSecret,
+            {
+                payment_method: {
+                    card: card,
+                    billing_details: {
+                        name: displayName,
+                        email: email
+                    },
+                },
+            },
+        );
+
+        if(intentError) {
+            setShowError(intentError.message)
+        } else {
+            setShowError("");
+            fetch(`http://localhost:5000/orders/${productId}`, {
+                method: "PUT",
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({transactionId: paymentIntent.id})
+            })
+            toast.success('Your payment is completed')
         }
     }
 
@@ -53,7 +101,7 @@ const CheckoutForm = () => {
                 }}
             />
             <p className="text-center text-red-500 my-3">{showError}</p>
-            <button className="btn bg-green-500 w-full text-white mt-5" type="submit" disabled={!stripe}>
+            <button className="btn bg-green-500 w-full text-white mt-5" type="submit" disabled={!stripe || !clientSecret}>
                 Pay
             </button>
         </form>
