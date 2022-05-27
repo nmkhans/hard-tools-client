@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import img from './login.png';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from "react-hook-form";
@@ -6,6 +6,7 @@ import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-fireba
 import auth from './../../firebase.init';
 import Loading from '../../global/Loading/Loading';
 import { toast } from 'react-toastify';
+import useToken from './../../hooks/useToken';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -27,11 +28,20 @@ const Login = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
 
+    const { token } = useToken(user || googleUser);
+
+    useEffect(() => {
+        if (token) {
+            toast.success("Login Successfull");
+            navigate(from, { replace: true });
+        }
+    }, [from, navigate, token])
+
     if (error || googleError) {
-        if(error.message === "Firebase: Error (auth/user-not-found).") {
+        if (error.message === "Firebase: Error (auth/user-not-found).") {
             toast.error("User not Found!")
         }
-        if(error.message === "Firebase: Error (auth/wrong-password).") {
+        if (error.message === "Firebase: Error (auth/wrong-password).") {
             toast.error("Wrong Email or Password!")
         }
         console.log(error || googleError)
@@ -39,11 +49,6 @@ const Login = () => {
 
     if (loading || googleLoading) {
         return <Loading />
-    }
-
-    if (user || googleUser) {
-        toast.success('Login Successfull')
-        navigate(from, {replace: true})
     }
 
     const handleGoogleSignIn = () => {

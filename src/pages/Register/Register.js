@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import img from './register.png';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { useCreateUserWithEmailAndPassword, useUpdateProfile, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from './../../firebase.init';
 import Loading from '../../global/Loading/Loading'
 import { toast } from 'react-toastify';
+import useToken from './../../hooks/useToken';
 
 
 const Register = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location?.state?.from?.pathname || '/';
     const uploadApi = '4ef6064f92cecc9354940bb42dad244d';
     const [
         createUserWithEmailAndPassword,
@@ -27,9 +30,18 @@ const Register = () => {
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
+    const { token } = useToken(user || googleUser);
+
+    useEffect(() => {
+        if (token) {
+            toast.success("Registration Successfull")
+            navigate(from, { replace: true });
+        }
+    }, [from, navigate, token])
+
     if (error || googleError) {
         // eslint-disable-next-line no-unused-vars
-        console.log(error || googleError)        
+        console.log(error || googleError)
     }
 
     if (loading || googleLoading) {
@@ -58,7 +70,7 @@ const Register = () => {
         })
             .then(res => res.json())
             .then(async data => {
-                const img = data.data.url;
+                const img = data?.data?.url;
                 await createUserWithEmailAndPassword(email, password);
                 await updateProfile({ displayName: name, photoURL: img });
                 toast.success('Registration Successfull');
