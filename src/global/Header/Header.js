@@ -13,6 +13,11 @@ const Header = ({ user }) => {
     const [mobileMenu, setMobileMenu] = useState(false);
     const [profileMenu, setProfileMenu] = useState(false);
 
+    const handleSignOut = () => {
+        signOut(auth);
+        localStorage.removeItem('accessToken')
+    }
+
     return (
         <div className="Header">
             <div className="container mx-auto">
@@ -46,7 +51,7 @@ const Header = ({ user }) => {
                                                     <div className="account__menu shadow-2xl p-8 absolute top-20 -right-20 bg-base-100 w-80 rounded-xl">
                                                         <ul className="text-center">
                                                             <li className="mb-5"><Link to="/dashboard">Dashboard</Link></li>
-                                                            <li className="mb-5"><button onClick={() => signOut(auth)}>Sign out</button></li>
+                                                            <li className="mb-5"><button onClick={handleSignOut}>Sign out</button></li>
                                                         </ul>
                                                     </div>
                                                 )

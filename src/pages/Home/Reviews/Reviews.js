@@ -24,7 +24,7 @@ const Reviews = () => {
                 <div className="reviews__content">
                     <Carousel showArrows={true} autoPlay={true} infiniteLoop={true} swipeable={true} showThumbs={false}>
                         {
-                            reviews.map((review) => <Review key={review._id} review={review} />)
+                            reviews?.map((review) => <Review key={review._id} review={review} />)
                         }
                     </Carousel>
                 </div>

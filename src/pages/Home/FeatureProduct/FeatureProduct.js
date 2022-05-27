@@ -6,7 +6,12 @@ import Loading from './../../../global/Loading/Loading';
 
 const FeatureProduct = () => {
     const { data: products, isLoading } = useQuery('products', () => (
-        fetch('http://localhost:5000/products')
+        fetch('http://localhost:5000/products', {
+            method: "GET",
+            headers: {
+                'content-type': 'application/json',
+            }
+        })
             .then(res => res.json())
     ))
 
@@ -22,7 +27,7 @@ const FeatureProduct = () => {
                 </div>
                 <div className="featureProduct__content grid grid-cols-3 gap-10">
                     {
-                        products.map((product) => <SingleProduct key={product._id} product={product} />)
+                        products?.map((product) => <SingleProduct key={product._id} product={product} />)
                     }
                 </div>
             </div>
