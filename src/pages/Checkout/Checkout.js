@@ -2,6 +2,11 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import Loading from './../../global/Loading/Loading';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+import CheckoutForm from './CheckoutForm/CheckoutForm';
+
+const stripePromise = loadStripe('pk_test_51L2T8gA0AzwDwvLYT6BvQrr4Lwmwwg1XF3OtDtrSbyUs0XnQw2epH0WdGR6FM2UrBZmBRZbbwsRENw77njlRJ1xr00ugasX5LN');
 
 const Checkout = () => {
     const { id } = useParams();
@@ -14,7 +19,6 @@ const Checkout = () => {
     if (isLoading) {
         return <Loading />
     }
-    console.log(product)
     const { productName, amount, totalPrice, img } = product;
 
     return (
@@ -35,26 +39,11 @@ const Checkout = () => {
                     </div>
                     <div className="purchase__form">
                         <div className="card w-[500px] shadow-2xl bg-base-100">
-                            <form >
-                                <div className="card-body">
-                                    <div className="form-control">
-                                        <label className="label">
-                                            <span className="label-text">Name</span>
-                                        </label>
-                                        <input type="text" placeholder="Name" className="input input-bordered" />
-                                    </div>
-                                    <div className="form-control">
-                                        <label className="label">
-                                            <span className="label-text">Email</span>
-                                        </label>
-                                        <input type="text" placeholder="email" className="input input-bordered"
-                                        />
-                                    </div>
-                                    <div className="form-control mt-6">
-                                        <button className="btn btn-primary">Place Order</button>
-                                    </div>
-                                </div>
-                            </form>
+                            <div className="card-body">
+                                <Elements stripe={stripePromise}>
+                                    <CheckoutForm />
+                                </Elements>
+                            </div>
                         </div>
                     </div>
                 </div>
