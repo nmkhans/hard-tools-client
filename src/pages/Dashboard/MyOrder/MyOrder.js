@@ -1,9 +1,48 @@
 import React from 'react';
+import { useQuery } from 'react-query';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from './../../../firebase.init';
+import Loading from './../../../global/Loading/Loading';
 
 const MyOrder = () => {
+    const [user, loading] = useAuthState(auth);
+    const email = user?.email;
+    const {data: orders, isLoading} = useQuery('my-orders', () => (
+        fetch(`http://localhost:5000/orders/${email}`)
+        .then(res => res.json())
+    ))
+
+    if(loading || isLoading) {
+        return <Loading />
+    }
+
+    console.log(orders)
+
     return (
-        <div>
-            <h1>This is my order</h1>
+        <div className="MyOrder">
+            <div className="MyOrder__title text-center">
+                <h2 className="text-2xl text-primary font-semibold inline-block border-b-2 border-accent pb-2 mb-5">Your Orders:</h2>
+            </div>
+            <div className="overflow-x-auto">
+                <table className="table w-full">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Job</th>
+                            <th>Favorite Color</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>1</th>
+                            <td>Cy Ganderton</td>
+                            <td>Quality Control Specialist</td>
+                            <td>Blue</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };

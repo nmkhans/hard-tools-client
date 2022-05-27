@@ -34,7 +34,7 @@ const Purchase = () => {
         
         const orderDetail = {name, email, productName, amount, totalPrice, phone, address};
         
-        fetch('http://localhost:5000/order', {
+        fetch('http://localhost:5000/orders', {
             method: "POST",
             headers: {
                 "content-type": "application/json"
