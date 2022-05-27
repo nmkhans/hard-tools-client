@@ -34,7 +34,7 @@ const Purchase = () => {
         const address = data.address;
         const status = false;
         
-        const orderDetail = {name, email, productName, productId, amount, totalPrice, phone, address, status};
+        const orderDetail = {name, email, productName, productId, amount, totalPrice, phone, address, status, img};
         
         fetch('http://localhost:5000/orders', {
             method: "POST",

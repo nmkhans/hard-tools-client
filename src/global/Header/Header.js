@@ -48,7 +48,7 @@ const Header = ({ user }) => {
                                             </div>
                                             {
                                                 profileMenu && (
-                                                    <div className="account__menu shadow-2xl p-8 absolute top-20 -right-20 bg-base-100 w-80 rounded-xl">
+                                                    <div className="account__menu shadow-2xl p-8 absolute top-20 -right-20 bg-base-100 w-80 rounded-xl z-10">
                                                         <ul className="text-center">
                                                             <li className="mb-5"><Link to="/dashboard">Dashboard</Link></li>
                                                             <li className="mb-5"><button onClick={handleSignOut}>Sign out</button></li>
