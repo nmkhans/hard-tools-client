@@ -5,6 +5,8 @@ import Register from './../../pages/Register/Register';
 import Login from './../../pages/Login/Login';
 import Purchase from './../../pages/Purchase/Purchase';
 import RequireAuth from '../RequireAuth/RequireAuth';
+import Dashboard from '../../pages/Dashboard/Dashboard';
+import MyOrder from './../../pages/Dashboard/MyOrder/MyOrder';
 
 const ApplicationRoutes = () => {
     return (
@@ -15,6 +17,13 @@ const ApplicationRoutes = () => {
                     <Purchase />
                 </RequireAuth>
             } />
+            <Route path="/dashboard" element={
+                <RequireAuth>
+                    <Dashboard />
+                </RequireAuth>
+            }>
+                <Route index element={<MyOrder />} />
+            </Route>
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
         </Routes>

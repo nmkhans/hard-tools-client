@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Header.css';
 import { Link } from 'react-router-dom';
 import logo from './logo.png';
-import { AiOutlineSearch, AiOutlineUser } from 'react-icons/ai';
+import { AiOutlineSearch, AiOutlineUser, AiOutlineDashboard } from 'react-icons/ai';
 import { GoThreeBars } from 'react-icons/go';
 import { ImCross } from 'react-icons/im';
 import HeaderNavigation from '../HeaderNavigation/HeaderNavigation';
@@ -24,6 +24,10 @@ const Header = ({ user }) => {
                             </Link>
                         </div>
                         <div className="header__account flex items-center">
+                            <div className="account__link px-3 lg:hidden">
+                                <span><AiOutlineDashboard className="inline-block text-2xl mr-2" /></span>
+                                <label htmlFor="dashboard-drawer">Dasboard</label>
+                            </div>
                             <div className="account__link px-3">
                                 <span><AiOutlineSearch className="inline-block text-2xl mr-2" /></span>
                                 <Link to="/search">Search</Link>
@@ -34,16 +38,15 @@ const Header = ({ user }) => {
                                         <div className="profile__menu relative cursor-pointer">
                                             <div onClick={() => setProfileMenu(!profileMenu)} className="avatar w-14 mt-2">
                                                 <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                                    <img src={user?.photoURL} alt="" />
+                                                    <img src={user?.photoURL} alt="User" />
                                                 </div>
                                             </div>
                                             {
                                                 profileMenu && (
                                                     <div className="account__menu shadow-2xl p-8 absolute top-20 -right-20 bg-base-100 w-80 rounded-xl">
                                                         <ul className="text-center">
-                                                            <li className="mb-5"><Link to="/">My account</Link></li>
-                                                            <li className="mb-5"><Link to="/">My account</Link></li>
-                                                            <li className="mb-5"><Link to="/">My account</Link></li>
+                                                            <li className="mb-5"><Link to="/dashboard">Dashboard</Link></li>
+                                                            <li className="mb-5"><Link to="/">My Account</Link></li>
                                                             <li className="mb-5"><button onClick={() => signOut(auth)}>Sign out</button></li>
                                                         </ul>
                                                     </div>
