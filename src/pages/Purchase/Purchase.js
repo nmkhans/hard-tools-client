@@ -1,14 +1,16 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { useForm } from "react-hook-form";
 import Loading from './../../global/Loading/Loading';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from './../../firebase.init';
+import { toast } from 'react-toastify';
 
 const Purchase = () => {
     const [user, loading] = useAuthState(auth);
     const { id } = useParams();
+    const navigate = useNavigate();
     const url = `http://localhost:5000/products/${id}`;
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
@@ -22,9 +24,30 @@ const Purchase = () => {
     }
 
     const onSubmit = async (data) => {
-        const amount = data.amount;
+        const name = data.name;
+        const email = data.email;
+        const productName = data.product;
+        const amount = parseInt(data.amount);
         const totalPrice = price * amount;
-        console.log(totalPrice);
+        const phone = data.phone;
+        const address = data.address;
+        
+        const orderDetail = {name, email, productName, amount, totalPrice, phone, address};
+        
+        fetch('http://localhost:5000/order', {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(orderDetail)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.insertedId) {
+                toast.success("Order Place Successfull")
+                navigate('/')
+            }
+        })
         reset();
     };
 
@@ -32,7 +55,7 @@ const Purchase = () => {
     const { name, img, price, description, minimum, available } = product;
 
     return (
-        <div className="Purchase">
+        <div className="Purchase py-10">
             <div className="hero min-h-screen bg-base-100">
                 <div className="hero-content text-center">
                     <div className="max-w-2xl">
@@ -67,6 +90,14 @@ const Purchase = () => {
                                         <input type="text" placeholder="email" className="input input-bordered"
                                             defaultValue={email} readOnly
                                             {...register("email")} />
+                                    </div>
+                                    <div className="form-control">
+                                        <label className="label">
+                                            <span className="label-text">Product</span>
+                                        </label>
+                                        <input type="text" placeholder="product" className="input input-bordered"
+                                            defaultValue={name} readOnly
+                                            {...register("product")} />
                                     </div>
                                     <div className="form-control">
                                         <label className="label">
