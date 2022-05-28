@@ -16,7 +16,7 @@ const Dashboard = () => {
                             <Link className="text-black" to="/dashboard">My Order</Link>
                         </li>
                         <li>
-                            <Link className="text-black" to="/dashboard/my-profile">My Account</Link>
+                            <Link className="text-black" to="/dashboard/my-profile">My Profile</Link>
                         </li>
                         <li>
                             <Link className="text-black" to="/dashboard/add-review">Add a Review</Link>
