@@ -47,7 +47,7 @@ const Dashboard = () => {
                             (currentUser?.role === "admin") && (
                                 <>
                                     <li>
-                                        <Link to="/dashboard">Add Products</Link>
+                                        <Link to="/dashboard/add-product">Add Products</Link>
                                     </li>
                                     <li>
                                         <Link to="/dashboard">Manage Products</Link>

@@ -11,6 +11,7 @@ import MyProfile from './../../pages/Dashboard/MyProfile/MyProfile';
 import Checkout from './../../pages/Checkout/Checkout';
 import AddReview from './../../pages/Dashboard/AddReview/AddReview';
 import ManageUsers from './../../pages/Dashboard/ManageUsers/ManageUsers';
+import AddProduct from './../../pages/Dashboard/AddProduct/AddProduct';
 
 const ApplicationRoutes = () => {
     return (
@@ -30,6 +31,7 @@ const ApplicationRoutes = () => {
                 <Route path="my-profile" element={<MyProfile />} />
                 <Route path="add-review" element={<AddReview />} />
                 <Route path="manage-users" element={<ManageUsers />} />
+                <Route path="add-product" element={<AddProduct />} />
             </Route>
             <Route path="/checkout/:id" element={<Checkout />} />
             <Route path="/register" element={<Register />} />
