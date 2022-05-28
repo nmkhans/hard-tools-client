@@ -12,6 +12,8 @@ import Checkout from './../../pages/Checkout/Checkout';
 import AddReview from './../../pages/Dashboard/AddReview/AddReview';
 import ManageUsers from './../../pages/Dashboard/ManageUsers/ManageUsers';
 import AddProduct from './../../pages/Dashboard/AddProduct/AddProduct';
+import NotFound from '../../pages/NotFound/NotFound';
+import Blog from './../../pages/Blog/Blog';
 
 const ApplicationRoutes = () => {
     return (
@@ -36,6 +38,8 @@ const ApplicationRoutes = () => {
             <Route path="/checkout/:id" element={<Checkout />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="*" element={<NotFound />} />
         </Routes>
     );
 };
