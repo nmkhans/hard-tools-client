@@ -8,7 +8,6 @@ const useToken = (user) => {
         const currentUser = { 
             name: name,
             email: email,
-            eduction: '-',
             address: '-',
             phone: '-',
             linkedId: '-',
